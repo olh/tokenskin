@@ -1,0 +1,32 @@
+{
+  "name": "token-skin",
+  "version": "0.9.0",
+  "description": "An open-world voxel MMORPG & Battle Royale web game engine built with Three.js, procedural terrain, and Web Audio.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "voxel",
+    "minecraft",
+    "mmorpg",
+    "runescape",
+    "battle-royale",
+    "threejs",
+    "webgl",
+    "procedural-generation",
+    "game-engine"
+  ],
+  "author": "olh <ricardo@olh.me>",
+  "license": "MIT",
+  "dependencies": {
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.187.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.6"
+  }
+}
