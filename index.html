@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Skin - Voxel MMORPG & Battle Royale</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>" />
+  </head>
+  <body>
+    <!-- 3D Rendering Viewport -->
+    <canvas id="game-canvas"></canvas>
+
+    <!-- Storm Hazard Vignette -->
+    <div id="storm-hazard-overlay" class="hidden"></div>
+
+    <!-- Center Crosshair -->
+    <div id="crosshair"></div>
+
+    <!-- Floating Damage & XP Text -->
+    <div id="floating-text-container"></div>
+
+    <!-- Notification Banner -->
+    <div id="notification-banner" class="hidden"></div>
+
+    <!-- Main Game HUD -->
+    <div id="hud-overlay">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <!-- Player Stats (Top Left) -->
+        <div class="player-stats-card">
+          <div class="stats-header">
+            <span class="player-name">ADVENTURER</span>
+            <span class="combat-lvl" id="combat-lvl-text">Combat Lv. 3</span>
+          </div>
+
+          <!-- Health Bar -->
+          <div class="bar-container">
+            <div class="bar-label-row">
+              <span style="color:#ef4444">HP</span>
+              <span id="hp-text">100 / 100</span>
+            </div>
+            <div class="bar-track">
+              <div id="hp-bar-fill" class="hp-fill"></div>
+            </div>
+          </div>
+
+          <!-- Stamina Bar -->
+          <div class="bar-container">
+            <div class="bar-label-row">
+              <span style="color:#10b981">STAMINA</span>
+            </div>
+            <div class="bar-track">
+              <div id="stamina-bar-fill" class="stamina-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Center Skill XP Bar & Mode Toggle -->
+        <div class="center-tracker">
+          <button id="mode-toggle-btn" class="mode-badge-btn">MODE: MMORPG OPEN WORLD</button>
+          <div class="skill-xp-bar-box">
+            <div id="xp-text" style="font-size:12px; font-weight:700; color:#fbbf24;">WOODCUTTING Lv.1 (0%)</div>
+            <div class="xp-track">
+              <div id="xp-bar-fill" class="xp-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Right: Minimap & Quests & BR Status -->
+        <div class="top-right-group">
+          <div class="minimap-wrapper">
+            <canvas id="minimap-canvas"></canvas>
+          </div>
+
+          <!-- Battle Royale Widget -->
+          <div id="br-status-widget" class="br-status-widget hidden">
+            <span id="br-timer-text">Zone Phase 1: 60s</span>
+            <span id="br-alive-text" style="color:#facc15">Alive: 24</span>
+          </div>
+
+          <!-- Active Quest HUD Tracker -->
+          <div class="active-quest-hud">
+            <div class="quest-hud-header">ACTIVE QUEST</div>
+            <div id="hud-quest-title">The Pioneer's Awakening</div>
+            <div id="hud-quest-objectives"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="bottom-bar">
+        <!-- 9-Slot Hotbar -->
+        <div id="hotbar-container" class="hotbar-container"></div>
+
+        <!-- Quick Help Keys -->
+        <div class="quick-help-hints">
+          <span><kbd>WASD</kbd> Move</span>
+          <span><kbd>Shift</kbd> Sprint</span>
+          <span><kbd>Space</kbd> Jump</span>
+          <span><kbd>L-Click</kbd> Attack/Mine</span>
+          <span><kbd>R-Click</kbd> Place/Talk</span>
+          <span><kbd>V</kbd> 1st/3rd Person</span>
+          <span><kbd>B</kbd> Battle Royale</span>
+          <span><kbd>E</kbd> Inventory</span>
+          <span><kbd>Q</kbd> Quests</span>
+          <span><kbd>H</kbd> Help</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inventory Modal (E) -->
+    <div id="inventory-modal" class="game-modal hidden">
+      <div class="modal-header">
+        <h2>🎒 INVENTORY & EQUIPMENT</h2>
+        <button id="inventory-close-btn" class="close-btn">&times;</button>
+      </div>
+      <p style="font-size:12px; color:#94a3b8; margin-bottom:12px;">Click consumable food/potions to heal. Items stack up to their max capacity.</p>
+      <div id="inventory-grid" class="inventory-grid"></div>
+    </div>
+
+    <!-- Quest Log Modal (Q) -->
+    <div id="quest-modal" class="game-modal hidden">
+      <div class="modal-header">
+        <h2>📜 QUEST LOG & ADVENTURES</h2>
+        <button id="quest-close-btn" class="close-btn">&times;</button>
+      </div>
+      <div id="quest-modal-list"></div>
+    </div>
+
+    <!-- Controls & Help Modal (H) -->
+    <div id="help-modal" class="game-modal hidden">
+      <div class="modal-header">
+        <h2>📖 TOKEN SKIN GUIDE & CONTROLS</h2>
+        <button id="help-close-btn" class="close-btn">&times;</button>
+      </div>
+      <div style="font-size:13px; line-height:1.6; color:#cbd5e1;">
+        <h4 style="color:#38bdf8; margin:8px 0 4px 0;">🎮 CONTROLS</h4>
+        <p>• <strong>WASD / Arrow Keys</strong>: Walk around the open world</p>
+        <p>• <strong>Shift</strong>: Sprint (consumes Stamina)</p>
+        <p>• <strong>Space</strong>: Jump / Swim upwards in water</p>
+        <p>• <strong>Left Click</strong>: Swing weapon, attack hostile goblins/monsters, or mine targeted blocks</p>
+        <p>• <strong>Right Click</strong>: Place blocks from hotbar, consume potions/apples, or interact with Sage Elder Bob</p>
+        <p>• <strong>V</strong>: Toggle First-Person & Third-Person Camera (RuneScape style)</p>
+        <p>• <strong>B</strong>: Toggle Battle Royale Arena Mode (Storm circle, supply chests, survival loop)</p>
+        <p>• <strong>E</strong>: Open 28-Slot Inventory</p>
+        <p>• <strong>Q</strong>: Open Quest Journal</p>
+        <p>• <strong>1 - 9 / Mouse Wheel</strong>: Select Hotbar active slot</p>
+        <hr style="border:none; border-top:1px solid rgba(255,255,255,0.1); margin:12px 0;"/>
+        <h4 style="color:#fbbf24; margin-bottom:4px;">⚔️ MMORPG GAMEPLAY</h4>
+        <p>Chop trees to train <strong>Woodcutting</strong>. Mine stone and gold/diamond ores to train <strong>Mining</strong>. Slay hostile goblins and skeletons to train <strong>Combat</strong> and <strong>Defense</strong>. Talk to Elder Bob near the shrine to advance through storyline quests.</p>
+      </div>
+    </div>
+
+    <!-- Dialogue Modal -->
+    <div id="dialogue-modal" class="game-modal hidden">
+      <div class="modal-header">
+        <h2 id="dialogue-speaker">Elder Bob</h2>
+        <button id="dialogue-close-btn" class="close-btn">&times;</button>
+      </div>
+      <div id="dialogue-content" style="font-size:14px; line-height:1.6; color:#e2e8f0; margin-bottom:16px;"></div>
+      <button onclick="document.getElementById('dialogue-modal').classList.add('hidden')" class="play-btn" style="font-size:14px; padding:6px 18px;">Understood</button>
+    </div>
+
+    <!-- Click To Play Overlay -->
+    <div id="click-to-play-overlay">
+      <div class="start-box">
+        <h1>TOKEN SKIN</h1>
+        <p>Open-World Voxel MMORPG & Battle Royale Web Engine</p>
+        <button class="play-btn">CLICK TO PLAY</button>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
