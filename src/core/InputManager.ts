@@ -1,6 +1,8 @@
 export class InputManager {
   public keys: Record<string, boolean> = {};
   public isPointerLocked: boolean = false;
+  public hasStarted: boolean = false;
+  public isMouseDown: boolean = false;
   public mouseSensitivity: number = 0.0022;
 
   public onLeftClick?: () => void;
@@ -14,13 +16,49 @@ export class InputManager {
   public onLook?: (deltaYaw: number, deltaPitch: number) => void;
 
   private canvas: HTMLCanvasElement;
+  private lastMouseX: number = 0;
+  private lastMouseY: number = 0;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
     this.setupListeners();
   }
 
+  public requestLock(): void {
+    this.hasStarted = true;
+    const blocker = document.getElementById('click-to-play-overlay');
+    if (blocker) {
+      blocker.classList.add('hidden');
+      blocker.style.display = 'none';
+    }
+
+    try {
+      const promise = this.canvas.requestPointerLock();
+      if (promise && 'catch' in promise) {
+        promise.catch(() => {
+          // Pointer lock rejected or not supported, fallback to drag-to-look
+        });
+      }
+    } catch {
+      // Ignored
+    }
+  }
+
   private setupListeners(): void {
+    // Explicit click listeners on the start overlay & button
+    const overlay = document.getElementById('click-to-play-overlay');
+    const playBtn = document.getElementById('start-play-btn') || overlay?.querySelector('.play-btn');
+
+    if (overlay) {
+      overlay.addEventListener('click', () => this.requestLock());
+    }
+    if (playBtn) {
+      playBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.requestLock();
+      });
+    }
+
     // Keyboard down
     window.addEventListener('keydown', (e) => {
       this.keys[e.code] = true;
@@ -50,7 +88,7 @@ export class InputManager {
     // Pointer Lock Request on Canvas Click
     this.canvas.addEventListener('click', () => {
       if (!this.isPointerLocked) {
-        this.canvas.requestPointerLock();
+        this.requestLock();
       }
     });
 
@@ -58,10 +96,9 @@ export class InputManager {
       this.isPointerLocked = document.pointerLockElement === this.canvas;
       const blocker = document.getElementById('click-to-play-overlay');
       if (blocker) {
-        if (this.isPointerLocked) {
+        if (this.isPointerLocked || this.hasStarted) {
           blocker.classList.add('hidden');
-        } else {
-          blocker.classList.remove('hidden');
+          blocker.style.display = 'none';
         }
       }
     });
@@ -72,12 +109,27 @@ export class InputManager {
         const deltaYaw = -e.movementX * this.mouseSensitivity;
         const deltaPitch = -e.movementY * this.mouseSensitivity;
         this.onLook?.(deltaYaw, deltaPitch);
+      } else if (this.isMouseDown && this.hasStarted) {
+        // Fallback drag-to-look when pointer lock is released or unsupported
+        const dx = e.clientX - this.lastMouseX;
+        const dy = e.clientY - this.lastMouseY;
+        this.onLook?.(-dx * this.mouseSensitivity, -dy * this.mouseSensitivity);
       }
+      this.lastMouseX = e.clientX;
+      this.lastMouseY = e.clientY;
     });
 
     // Mouse Clicks
     this.canvas.addEventListener('mousedown', (e) => {
-      if (!this.isPointerLocked) return;
+      this.isMouseDown = true;
+      this.lastMouseX = e.clientX;
+      this.lastMouseY = e.clientY;
+
+      if (!this.isPointerLocked && !this.hasStarted) {
+        this.requestLock();
+        return;
+      }
+
       if (e.button === 0) {
         this.onLeftClick?.();
       } else if (e.button === 2) {
@@ -85,12 +137,15 @@ export class InputManager {
       }
     });
 
+    window.addEventListener('mouseup', () => {
+      this.isMouseDown = false;
+    });
+
     // Prevent context menu
     this.canvas.addEventListener('contextmenu', (e) => e.preventDefault());
 
     // Mouse Wheel for Hotbar
     window.addEventListener('wheel', (e) => {
-      if (!this.isPointerLocked) return;
       const dir = Math.sign(e.deltaY);
       this.onHotbarSelect?.(dir);
     });

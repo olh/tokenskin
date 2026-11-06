@@ -162,11 +162,11 @@
     </div>
 
     <!-- Click To Play Overlay -->
-    <div id="click-to-play-overlay">
-      <div class="start-box">
+    <div id="click-to-play-overlay" onclick="window.__startTokenSkin &amp;&amp; window.__startTokenSkin()">
+      <div class="start-box" onclick="event.stopPropagation(); window.__startTokenSkin &amp;&amp; window.__startTokenSkin()">
         <h1>TOKEN SKIN</h1>
-        <p>Open-World Voxel MMORPG & Battle Royale Web Engine</p>
-        <button class="play-btn">CLICK TO PLAY</button>
+        <p>Open-World Voxel MMORPG &amp; Battle Royale Web Engine</p>
+        <button id="start-play-btn" class="play-btn" onclick="event.stopPropagation(); window.__startTokenSkin &amp;&amp; window.__startTokenSkin()">CLICK TO PLAY</button>
       </div>
     </div>
 

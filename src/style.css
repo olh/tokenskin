@@ -646,6 +646,9 @@ body, html {
   box-shadow: 0 0 20px rgba(56, 189, 248, 0.8);
 }
 
-.hidden {
+.hidden, #click-to-play-overlay.hidden {
   display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
 }

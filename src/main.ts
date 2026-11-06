@@ -1,8 +1,31 @@
 import './style.css';
 import { Engine } from './core/Engine';
 
-window.addEventListener('DOMContentLoaded', () => {
-  // Initialize Token Skin Voxel MMORPG & Battle Royale Engine
-  const engine = new Engine();
-  (window as unknown as { __tokenSkinEngine: Engine }).__tokenSkinEngine = engine;
-});
+let engineInstance: Engine | null = null;
+
+export function initGame(): Engine {
+  if (engineInstance) return engineInstance;
+  try {
+    engineInstance = new Engine();
+    (window as unknown as { __tokenSkinEngine: Engine }).__tokenSkinEngine = engineInstance;
+    console.log('✅ Token Skin Engine initialized successfully!');
+  } catch (err) {
+    console.error('❌ Failed to initialize Token Skin Engine:', err);
+  }
+  return engineInstance!;
+}
+
+// Global start trigger callable directly from UI click handlers
+(window as unknown as { __startTokenSkin: () => void }).__startTokenSkin = () => {
+  const engine = initGame();
+  if (engine && engine.input) {
+    engine.input.requestLock();
+  }
+};
+
+// Ensure Engine boots immediately whether DOMContentLoaded fired or is pending
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => initGame());
+} else {
+  initGame();
+}
