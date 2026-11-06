@@ -20,33 +20,60 @@ All gameplay, rendering, voxel meshing, collision physics, and synthesized sound
 
 ---
 
-## 📸 Gameplay Showcase
+## 🎮 Live Engine Prototype Screenshots
 
-### 🌲 1. Open-World Voxel Exploration & Integrated MMORPG HUD
-Explore an infinite procedurally-generated voxel wilderness. Track active quests (*The Pioneer's Awakening*), monitor player health & stamina, navigate via the real-time top-down radar compass, and manage tool loadouts directly from the 9-slot action hotbar.
+*The following screenshots are captured directly from the live WebGL buffer and browser DOM of the functioning Token Skin prototype.*
 
-![Open World Voxel Exploration](docs/screenshots/openworld-exploration.jpg)
+### 🌲 1. First-Person Open World & Integrated HUD
+Actual in-engine view of procedural chunk terrain, oak trees, water shoreline, village sage **Elder Bob** with interactive `!` quest marker, a hostile skeleton mob, 9-slot action hotbar, and the top-right real-time minimap radar.
 
----
-
-### ⚔️ 2. Dynamic Third-Person Combat & RuneScape Skill Progression
-Switch camera perspectives instantly (`V` key) into classic third-person chase camera mode. Engage hostile forest goblins, skeletons, and zombies with real-time blade hitboxes, hit-splat damage numbers (`-28`), enemy health bars, and instant floating XP drops (`+112 COMBAT XP`).
-
-![Dynamic Third-Person Combat](docs/screenshots/combat-and-skills.jpg)
+![Live Engine First-Person](docs/screenshots/engine-openworld-firstperson.png)
 
 ---
 
-### ⚡ 3. "The Token Arena" — Battle Royale Storm Collapse
-Press `B` to transition into high-intensity Battle Royale mode. An electric purple forcefield storm cylinder continuously contracts across timed phases, forcing combatants towards supply drop crates beaming beacons of light into the sky. Features live participant tracking and a dynamic killfeed.
+### 📷 2. Third-Person Avatar Perspective (`V` Key)
+Actual in-engine chase camera view displaying the 3D player avatar standing atop the ancient brick spawn shrine overlooking the voxel wilderness.
 
-![Battle Royale Arena Storm](docs/screenshots/battle-royale-storm.jpg)
+![Live Engine Third-Person](docs/screenshots/engine-avatar-thirdperson.png)
 
 ---
 
-### ⛏️ 4. Subterranean Caverns & Deep Mining
-Tunnel into the depths beneath the bedrock threshold to discover underground cave networks. Mine veins of golden ore and glowing cyan token diamonds with pickaxes, earning Mining XP and collecting rare materials for high-tier gear forging.
+### ⚡ 3. Battle Royale Mode & Electric Storm Forcefield (`B` Key)
+Actual in-engine arena mode featuring the towering electric purple storm cylinder, zone countdown widget (`Zone Phase 1: 60s | Alive: 24`), and storm alerts.
 
-![Subterranean Mining](docs/screenshots/subterranean-mining.jpg)
+![Live Engine Battle Royale](docs/screenshots/engine-battleroyale-storm.png)
+
+---
+
+### 🎒 4. 28-Slot RuneScape-Style Inventory Modal (`E` Key)
+Actual in-engine inventory grid interface showing slot management, item tooltips, consumable usage, and hotbar integration.
+
+![Live Engine Inventory Grid](docs/screenshots/engine-inventory-equipment.png)
+
+---
+
+## 🎨 Concept Art & Target Vision
+
+*Target visual design mockups representing the aesthetic and feature scope as the development landmarks are fulfilled.*
+
+### ⚔️ Combat & RuneScape Skill Progression
+Concept visualization of dynamic melee encounters, sparks, floating hit-splat damage numbers, and golden XP drop notifications.
+
+![Target Combat Vision](docs/screenshots/combat-and-skills.jpg)
+
+---
+
+### 🌩️ The Token Arena — High-Stakes Survival
+Concept visualization of the final circle collapse in Battle Royale mode with supply drop beacons and competitive tournament killfeed.
+
+![Target Battle Royale Vision](docs/screenshots/battle-royale-storm.jpg)
+
+---
+
+### ⛏️ Subterranean Caverns & Deep Mining
+Concept visualization of underground cave exploration, mining glowing cyan token diamond veins, and torchlit cavern formations.
+
+![Target Subterranean Mining Vision](docs/screenshots/subterranean-mining.jpg)
 
 ---
 

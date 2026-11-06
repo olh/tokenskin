@@ -29,3 +29,23 @@ if (document.readyState === 'loading') {
 } else {
   initGame();
 }
+
+// Support auto-start and preview modes via URL query params for automated screenshots and preview
+const params = new URLSearchParams(window.location.search);
+if (params.has('autostart')) {
+  setTimeout(() => {
+    (window as unknown as { __startTokenSkin: () => void }).__startTokenSkin();
+    if (params.get('mode') === 'br') {
+      engineInstance?.brManager.activate();
+    }
+    if (params.has('thirdperson')) {
+      engineInstance?.player.toggleCamera();
+    }
+    if (params.has('inventory')) {
+      engineInstance?.hud.toggleInventory(true);
+    }
+    if (params.has('quests')) {
+      engineInstance?.hud.toggleQuestModal(true);
+    }
+  }, 400);
+}
