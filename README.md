@@ -20,6 +20,36 @@ All gameplay, rendering, voxel meshing, collision physics, and synthesized sound
 
 ---
 
+## 📸 Gameplay Showcase
+
+### 🌲 1. Open-World Voxel Exploration & Integrated MMORPG HUD
+Explore an infinite procedurally-generated voxel wilderness. Track active quests (*The Pioneer's Awakening*), monitor player health & stamina, navigate via the real-time top-down radar compass, and manage tool loadouts directly from the 9-slot action hotbar.
+
+![Open World Voxel Exploration](docs/screenshots/openworld-exploration.jpg)
+
+---
+
+### ⚔️ 2. Dynamic Third-Person Combat & RuneScape Skill Progression
+Switch camera perspectives instantly (`V` key) into classic third-person chase camera mode. Engage hostile forest goblins, skeletons, and zombies with real-time blade hitboxes, hit-splat damage numbers (`-28`), enemy health bars, and instant floating XP drops (`+112 COMBAT XP`).
+
+![Dynamic Third-Person Combat](docs/screenshots/combat-and-skills.jpg)
+
+---
+
+### ⚡ 3. "The Token Arena" — Battle Royale Storm Collapse
+Press `B` to transition into high-intensity Battle Royale mode. An electric purple forcefield storm cylinder continuously contracts across timed phases, forcing combatants towards supply drop crates beaming beacons of light into the sky. Features live participant tracking and a dynamic killfeed.
+
+![Battle Royale Arena Storm](docs/screenshots/battle-royale-storm.jpg)
+
+---
+
+### ⛏️ 4. Subterranean Caverns & Deep Mining
+Tunnel into the depths beneath the bedrock threshold to discover underground cave networks. Mine veins of golden ore and glowing cyan token diamonds with pickaxes, earning Mining XP and collecting rare materials for high-tier gear forging.
+
+![Subterranean Mining](docs/screenshots/subterranean-mining.jpg)
+
+---
+
 ## 🎯 Who It's For
 
 - **Web Gamers & RPG Fans**: Players looking for a zero-install, instant-loading 3D open-world experience that runs directly in modern browsers at a smooth 60+ FPS.
